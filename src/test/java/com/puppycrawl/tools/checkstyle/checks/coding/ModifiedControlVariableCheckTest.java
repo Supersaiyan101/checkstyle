@@ -198,6 +198,16 @@ public class ModifiedControlVariableCheckTest
                 expected);
     }
 
+    @Test
+    public void testRecordPattern() throws Exception {
+        final String[] expected = {
+            "16:18: " + getCheckMessage(MSG_KEY, "line"),
+        };
+        verifyWithInlineConfigParser(
+                getPath("InputModifiedControlVariableRecordPattern.java"),
+                expected);
+    }
+
     /**
      * We cannot reproduce situation when visitToken is called and leaveToken is not.
      * So, we have to use reflection to be sure that even in such situation

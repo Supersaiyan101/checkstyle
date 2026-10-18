@@ -320,10 +320,12 @@ public final class ModifiedControlVariableCheck extends AbstractCheck {
     private void leaveForDef(DetailAST ast) {
         final DetailAST forInitAST = ast.findFirstToken(TokenTypes.FOR_INIT);
         if (forInitAST == null) {
-            final Deque<String> currentVariables = getCurrentVariables();
-            if (!skipEnhancedForLoopVariable && !currentVariables.isEmpty()) {
+            final DetailAST forEachClause = ast.findFirstToken(TokenTypes.FOR_EACH_CLAUSE);
+            final boolean hasVariableDef =
+                forEachClause.findFirstToken(TokenTypes.VARIABLE_DEF) != null;
+            if (!skipEnhancedForLoopVariable && hasVariableDef) {
                 // this is for-each loop, just pop variables
-                currentVariables.pop();
+                getCurrentVariables().pop();
             }
         }
         else {
